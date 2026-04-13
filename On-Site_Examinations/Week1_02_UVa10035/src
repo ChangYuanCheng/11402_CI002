@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string a, b;
+
+    while (cin >> a >> b) {
+        if (a == "0" && b == "0") break;
+
+        int i = a.length() - 1; //指向 a 的最後一位（最低位），最高位是a[0]
+        int j = b.length() - 1;
+        int carry = 0, count = 0;
+
+        while (i >= 0 || j >= 0) {
+            int x = (i >= 0) ? a[i] - '0' : 0;
+            int y = (j >= 0) ? b[j] - '0' : 0;
+
+            int sum = x + y + carry;
+
+            if (sum >= 10) {
+                carry = 1;
+                count++;
+            } else {
+                carry = 0;
+            }
+
+            i--;//往前一位（往高位移動）
+            j--;
+        }
+
+        if (count == 0)
+            cout << "No carry operation." << endl;
+        else if (count == 1)
+            cout << "1 carry operation." << endl;
+        else
+            cout << count << " carry operations." << endl;
+    }
+
+    return 0;
+}  

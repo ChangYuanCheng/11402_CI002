@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    while (cin >> n) {
+        int ans = n;
+        int empty = n;
+
+        while (empty >= 3) {
+            int newCola = empty / 3;
+            ans += newCola;
+            empty = newCola + (empty % 3);
+        }
+
+        if (empty == 2) ans++; // 借一瓶
+
+        cout << ans << endl;
+    }
+
+    return 0;
+} 

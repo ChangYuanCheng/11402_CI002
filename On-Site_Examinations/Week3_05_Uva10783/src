@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int T;
+    cin >> T;
+
+    for (int t = 1; t <= T; t++) {
+        int a, b;
+        cin >> a >> b;
+
+        int sum = 0;
+
+        if (a % 2 == 0) a++;  // 從第一個奇數開始
+
+        for (int i = a; i <= b; i += 2) {
+            sum += i;
+        }
+
+        cout << "Case " << t << ": " << sum << endl;
+    }
+
+    return 0;
+}

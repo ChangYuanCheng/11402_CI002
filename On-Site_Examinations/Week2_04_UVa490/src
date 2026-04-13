@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<string> v;
+    string s;
+    int maxLen = 0;
+
+    while (getline(cin, s)) {
+        v.push_back(s);
+        if (s.size() > maxLen)
+            maxLen = s.size();
+    }
+
+    for (int i = 0; i < maxLen; i++) {
+        for (int j = v.size() - 1; j >= 0; j--) {
+            if (i < v[j].size())
+                cout << v[j][i];
+            else
+                cout << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

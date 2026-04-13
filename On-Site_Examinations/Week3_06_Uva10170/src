@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long S, D;
+
+    while (cin >> S >> D) {
+        long long sum = 0;
+        long long cur = S;
+
+        while (sum < D) {
+            sum += cur;
+            cur++;
+        }
+
+        cout << cur - 1 << endl;
+    }
+
+    return 0;
+}

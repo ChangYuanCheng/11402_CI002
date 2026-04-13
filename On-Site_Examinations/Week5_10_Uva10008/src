@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cctype>
+#include <string>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    cin.ignore();
+
+    vector<int> freq(26, 0);
+
+    string s;
+    while (n--) {
+        getline(cin, s);
+        for (char c : s) {
+            if (isalpha(c)) {//如果是英文字母才處理（忽略空白、標點）
+                c = toupper(c);//轉成大寫
+                freq[c - 'A']++;//c = 'C' ,'C' - 'A' = 2 是 freq[2]++
+            }
+        }
+    }
+//===== 統計結束 =====
+ 
+    vector<pair<char, int>> v;//用來存：(A, 3)(B, 1)...
+
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > 0) {//只放有出現的字母
+            v.push_back({char('A' + i), freq[i]});//i = 0 → A i = 2 → C
+        }
+    
+
+    sort(v.begin(), v.end(), [](pair<char,int> a, pair<char,int> b) {//自訂排序規則
+        if (a.second != b.second)
+            return a.second > b.second; // 次數大到小
+        return a.first < b.first;      // 字母小到大
+    });
+
+    for (auto &p : v) {
+        cout << p.first << " " << p.second << endl;
+    }
+
+    return 0;
+}
