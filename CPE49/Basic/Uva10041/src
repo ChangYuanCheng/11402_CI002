@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        vector<int> a(n);
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+
+        // 排序
+        sort(a.begin(), a.end());
+
+        // 取中位數
+        int mid = a[n / 2];
+
+        // 計算距離總和
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += abs(a[i] - mid);
+        }
+
+        // 輸出
+        cout << sum << endl;
+    }
+
+    return 0;
+}

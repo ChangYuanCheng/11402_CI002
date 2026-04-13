@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string row1 = "`1234567890-=";
+string row2 = "QWERTYUIOP[]";
+string row3 = "ASDFGHJKL;'";
+string row4 = "ZXCVBNM,./";
+
+char decode(char c) {
+    string r[4] = {row1, row2, row3, row4};
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < r[i].size(); j++) {
+            if (r[i][j] == c) {
+                return r[i][j - 1];
+            }
+        }
+    }
+    return c;
+}
+
+int main() {
+    string s;
+
+    while (getline(cin, s)) {
+        for (char c : s) {
+            if (c == ' ') cout << " ";
+            else cout << decode(c);
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,20 @@
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+int main() {
+    map<string, int> mp;
+    string country, name;
+
+    while (cin >> country) {
+        getline(cin, name); // 吃掉剩下的人名
+        mp[country]++;
+    }
+
+    for (auto &x : mp) {
+        cout << x.first << " " << x.second << endl;
+    }
+
+    return 0;
+}
