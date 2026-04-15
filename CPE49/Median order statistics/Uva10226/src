@@ -1,0 +1,34 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    int t;
+    string s;
+    getline(cin, s);
+    t = stoi(s);
+
+    getline(cin, s); // 吃掉空行
+
+    while (t--) {
+        map<string, int> mp;
+        int total = 0;
+
+        while (getline(cin, s)) {
+            if (s == "") break;
+            mp[s]++;
+            total++;
+        }
+
+        for (auto &x : mp) {
+            double ans = (x.second * 100.0) / total;
+            cout << x.first << " " << fixed << setprecision(4) << ans << endl;
+        }
+
+        if (t) cout << endl;
+    }
+
+    return 0;
+}

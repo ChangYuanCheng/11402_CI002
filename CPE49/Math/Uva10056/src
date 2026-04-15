@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n, i;
+        double p;
+
+        cin >> n >> p >> i;
+
+        if (p == 0) {
+            cout << fixed << setprecision(4) << 0.0 << endl;
+            continue;
+        }
+
+        double q = 1 - p;
+
+        double ans = pow(q, i - 1) * p / (1 - pow(q, n));
+
+        cout << fixed << setprecision(4) << ans << endl;
+    }
+
+    return 0;
+}

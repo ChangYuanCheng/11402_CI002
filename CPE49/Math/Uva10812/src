@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        long long s, d;
+        cin >> s >> d;
+
+        if (s < d || (s + d) % 2 != 0) {
+            cout << "impossible" << endl;
+            continue;
+        }
+
+        long long a = (s + d) / 2;
+        long long b = (s - d) / 2;
+
+        if (b < 0)
+            cout << "impossible" << endl;
+        else
+            cout << a << " " << b << endl;
+    }
+
+    return 0;
+}

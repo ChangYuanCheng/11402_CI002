@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    long long a, b;
+
+    while (cin >> a >> b) {
+        if (a == 0 && b == 0) break;
+
+        long long l = ceil(sqrt(a));
+        long long r = floor(sqrt(b));
+
+        if (r < l) cout << 0 << endl;
+        else cout << (r - l + 1) << endl;
+    }
+
+    return 0;
+}

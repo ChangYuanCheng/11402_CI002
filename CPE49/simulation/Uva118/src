@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool scent[55][55];
+
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+int main() {
+    int maxX, maxY;
+    cin >> maxX >> maxY;
+
+    int x, y;
+    char dir;
+
+    string cmd;
+
+    while (cin >> x >> y >> dir >> cmd) {
+        int d;
+
+        if (dir == 'N') d = 0;
+        else if (dir == 'E') d = 1;
+        else if (dir == 'S') d = 2;
+        else d = 3;
+
+        bool lost = false;
+
+        for (char c : cmd) {
+            if (c == 'L') d = (d + 3) % 4;
+            else if (c == 'R') d = (d + 1) % 4;
+            else {
+                int nx = x + dx[d];
+                int ny = y + dy[d];
+
+                if (nx < 0 || ny < 0 || nx > maxX || ny > maxY) {
+                    if (scent[x][y]) continue;
+                    scent[x][y] = true;
+                    lost = true;
+                    break;
+                }
+
+                x = nx;
+                y = ny;
+            }
+        }
+
+        cout << x << " " << y << " ";
+
+        if (dir == 'N' && d == 0) cout << "N";
+        else if (dir == 'E' && d == 1) cout << "E";
+        else if (dir == 'S' && d == 2) cout << "S";
+        else if (dir == 'W' && d == 3) cout << "W";
+
+        if (lost) cout << " LOST";
+
+        cout << endl;
+    }
+
+    return 0;
+}

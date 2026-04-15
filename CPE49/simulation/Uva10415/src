@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+
+    string map[14] = {
+        "0111001111", // c
+        "0111001110", // d
+        "0111001100", // e
+        "0111001000", // f
+        "0111000000", // g
+        "0110000000", // a
+        "0100000000", // b
+        "1100000000", // C
+        "1010000000", // D
+        "1000000000", // E
+        "0000000000", // F
+        "0000000000", // G
+        "0000000000", // A
+        "0000000000"  // B
+    };
+
+    string order = "cdefgabCDEFGAB";
+
+    string s;
+    while (cin >> s) {
+
+        int cur[10] = {0};
+        int pre[10] = {0};
+        int ans[10] = {0};
+
+        for (char ch : s) {
+            int idx = order.find(ch);
+
+            for (int i = 0; i < 10; i++) {
+                cur[i] = map[idx][i] - '0';
+            }
+
+            for (int i = 0; i < 10; i++) {
+                if (cur[i] == 1 && pre[i] == 0)
+                    ans[i]++;
+            }
+
+            for (int i = 0; i < 10; i++) {
+                pre[i] = cur[i];
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+            cout << ans[i];
+            if (i != 9) cout << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
