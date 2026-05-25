@@ -14,7 +14,7 @@ int main() {
         cin >> n >> p >> i;
 
         if (p == 0) {
-            cout << fixed << setprecision(4) << 0.0 << endl;
+            cout << fixed << setprecision(4) << 0.0 << endl; //fixed 小數點後 setprecision 有效位數
             continue;
         }
 
