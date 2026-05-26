@@ -1,0 +1,162 @@
+#include <iostream>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+struct Node {
+
+    bool have_value;
+    int value;
+
+    Node *left;
+    Node *right;
+
+    Node() {
+        have_value = false;
+        left = right = NULL;
+    }
+};
+
+Node* root;
+
+bool failed;
+
+// 建新節點
+Node* newnode() {
+    return new Node();
+}
+
+// 初始化
+void removeTree(Node* u) {
+
+    if (u == NULL) return;
+
+    removeTree(u->left);
+    removeTree(u->right);
+
+    delete u;
+}
+
+// 插入
+void addnode(int value, string path) {
+
+    Node* cur = root;
+
+    // 走 path
+    for (int i = 0; i < path.size(); i++) {
+
+        if (path[i] == 'L') {
+
+            if (cur->left == NULL) {
+                cur->left = newnode();
+            }
+
+            cur = cur->left;
+        }
+        else {
+
+            if (cur->right == NULL) {
+                cur->right = newnode();
+            }
+
+            cur = cur->right;
+        }
+    }
+
+    // 已經有值
+    if (cur->have_value) {
+        failed = true;
+    }
+
+    cur->value = value;
+    cur->have_value = true;
+}
+
+// BFS
+bool bfs(vector<int>& ans) {
+
+    queue<Node*> q;
+
+    q.push(root);
+
+    while (!q.empty()) {
+
+        Node* cur = q.front();
+        q.pop();
+
+        // 缺值
+        if (!cur->have_value) {
+            return false;
+        }
+
+        ans.push_back(cur->value);
+
+        if (cur->left != NULL) {
+            q.push(cur->left);
+        }
+
+        if (cur->right != NULL) {
+            q.push(cur->right);
+        }
+    }
+
+    return true;
+}
+
+int main() {
+
+    string s;
+
+    root = newnode();
+
+    failed = false;
+
+    while (cin >> s) {
+
+        // 一組結束
+        if (s == "()") {
+
+            vector<int> ans;
+
+            if (!failed && bfs(ans)) {
+
+                for (int i = 0; i < ans.size(); i++) {
+
+                    if (i) cout << " ";
+
+                    cout << ans[i];
+                }
+
+                cout << endl;
+            }
+            else {
+                cout << "not complete" << endl;
+            }
+
+            // 清空
+            removeTree(root);
+
+            root = newnode();
+            failed = false;
+        }
+        else {
+
+            // 去掉 '(' ')'
+            s = s.substr(1, s.size() - 2);
+
+            int comma = s.find(',');
+
+            int value = stoi(
+                s.substr(0, comma)
+            );
+
+            string path =
+                s.substr(comma + 1);
+
+            addnode(value, path);
+        }
+    }
+
+    return 0;
+}

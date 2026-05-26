@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+//DBACEGF ABCDEFG
+//BCAD CBAD
+
+//ACBFGED
+//CDAB
+string preorder, inorder;
+
+void build(string pre, string in) {
+
+    // 如果沒有節點
+    // 代表這棵子樹是空的
+    if (pre.size() == 0)
+        return;
+
+    // preorder 第一個一定是 root
+    char root = pre[0];
+
+    // 在 inorder 找 root 的位置
+    int pos = in.find(root);
+
+    // 遞迴建立左子樹
+    build(
+        //pre.substr(開始位置, 長度),index 1 開始取 pos 個,因index 0 = root
+        pre.substr(1, pos),
+        //index 0 會是最左下的leaf
+        in.substr(0, pos)
+    );
+
+    // 遞迴建立右子樹
+    build(
+        pre.substr(pos + 1), //從 pos+1 一直取到最後
+        in.substr(pos + 1)
+    );
+
+    // postorder：
+    // 左右子樹做完後最後輸出 root
+    cout << root;
+}
+
+int main() {
+
+    // 一直讀到 EOF
+    while (cin >> preorder >> inorder) {
+
+        build(preorder, inorder);
+
+        cout << endl;
+    }
+
+    return 0;
+}

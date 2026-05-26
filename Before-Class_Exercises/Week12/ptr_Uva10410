@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+int main() {
+
+    int n;
+
+    while (cin >> n) {
+
+        vector<int> bfs(n);
+        vector<int> dfs(n);
+
+        // BFS
+        for (int i = 0; i < n; i++) {
+            cin >> bfs[i];
+        }
+
+        // DFS
+        for (int i = 0; i < n; i++) {
+            cin >> dfs[i];
+        }
+
+        // 記錄 BFS 位置
+        vector<int> pos(n + 1);
+
+        for (int i = 0; i < n; i++) {
+            pos[bfs[i]] = i;
+        }
+
+        // children[u]
+        vector<vector<int>> child(n + 1);
+
+        stack<int> st;
+
+        // root
+        st.push(dfs[0]);
+
+        // 從第二個開始
+        for (int i = 1; i < n; i++) {
+
+            int cur = dfs[i];
+
+            // 找 parent
+            while (!st.empty() &&
+                   pos[cur] <= pos[st.top()]) {
+
+                st.pop();
+            }
+
+            // st.top() 是 parent
+            child[st.top()].push_back(cur);
+
+            st.push(cur);
+        }
+
+        // 輸出
+        for (int i = 1; i <= n; i++) {
+
+            cout << i << ":";
+
+            for (int x : child[i]) {
+                cout << " " << x;
+            }
+
+            cout << endl;
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,47 @@
+#include <iostream>
+#include <deque>
+using namespace std;
+
+int main() {
+    int P, C;
+    int caseNum = 1;
+
+    while (cin >> P >> C && (P || C)) {
+        cout << "Case " << caseNum++ << ":\n";
+
+        deque<int> dq;
+
+        // 只放 min(P, C)
+        for (int i = 1; i <= min(P, C); i++) {
+            dq.push_back(i);
+        }
+
+        while (C--) {
+            char cmd;
+            cin >> cmd;
+
+            if (cmd == 'N') {
+                int x = dq.front();
+                dq.pop_front();
+                cout << x << "\n";
+                dq.push_back(x);
+            }
+            else if (cmd == 'E') {
+                int x;
+                cin >> x;
+
+                // 找到並刪除
+                for (auto it = dq.begin(); it != dq.end(); it++) {
+                    if (*it == x) {
+                        dq.erase(it);
+                        break;
+                    }
+                }
+
+                dq.push_front(x);
+            }
+        }
+    }
+
+    return 0;
+}

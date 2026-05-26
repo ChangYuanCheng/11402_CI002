@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+string s;
+int pos;
+int target;
+
+bool found;
+
+// DFS + parse
+bool build(int sum) {
+
+    // 一定先看到 '('
+    pos++;
+
+    // 空樹
+    if (s[pos] == ')') {
+        pos++;
+        return false;
+    }
+
+    // 讀數字
+    int sign = 1;
+
+    if (s[pos] == '-') {
+        sign = -1;
+        pos++;
+    }
+
+    int num = 0;
+
+    while (isdigit(s[pos])) {
+        num = num * 10 + (s[pos] - '0');
+        pos++;
+    }
+
+    num *= sign;
+
+    sum += num;
+
+    // 左右子樹
+    bool left = build(sum);
+    bool right = build(sum);
+
+    // leaf
+    if (!left && !right && sum == target) {
+        found = true;
+    }
+
+    // 跳過 ')'
+    pos++;
+
+    return true;
+}
+
+int main() {
+
+    while (cin >> target) {
+
+        s.clear();
+
+        char c;
+
+        int cnt = 0;
+
+        // 讀完整棵樹
+        while (cin >> c) {
+
+            if (c == '(') cnt++;
+            if (c == ')') cnt--;
+
+            s += c;
+
+            if (cnt == 0) break;
+        }
+
+        pos = 0;
+        found = false;
+
+        build(0);
+
+        if (found) {
+            cout << "yes" << endl;
+        }
+        else {
+            cout << "no" << endl;
+        }
+    }
+
+    return 0;
+}

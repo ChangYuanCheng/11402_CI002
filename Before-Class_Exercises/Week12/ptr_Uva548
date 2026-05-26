@@ -1,0 +1,123 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <climits>
+
+using namespace std;
+//給定Inorder postorder
+//最小路徑總和對應的 leaf 節點值
+//如果有多個 leaf 總和相同，輸出值較小的 leaf
+
+//3 2 1 5 4
+//3 1 2 4 5
+//output 1
+
+vector<int> inorder, postorder;
+
+int bestSum;   // 最小路徑總和
+int bestLeaf;  // 對應的 leaf
+
+// 建樹 + DFS
+void build(int inL, int inR, int postL, int postR, int sum) {
+
+    // 沒有節點
+    if (inL > inR) {
+        return;
+    }
+
+    // root 是 postorder 最後一個
+    int root = postorder[postR];
+
+    // 加入目前節點值
+    sum += root;
+
+    // 找 root 在 inorder 的位置
+    int k = inL;
+
+    while (inorder[k] != root) {
+        k++;
+    }
+
+    // 左子樹大小
+    int leftSize = k - inL;
+
+    // 判斷是否為 leaf
+    if (inL == inR) {
+
+        // 更新答案
+        if (sum < bestSum ||
+           (sum == bestSum && root < bestLeaf)) {
+
+            bestSum = sum;
+            bestLeaf = root;
+        }
+
+        return;
+    }
+
+    // 遞迴左子樹
+    build(
+        inL,
+        k - 1,
+        postL,
+        postL + leftSize - 1,
+        sum
+    );
+
+    // 遞迴右子樹
+    build(
+        k + 1,
+        inR,
+        postL + leftSize,
+        postR - 1,
+        sum
+    );
+}
+
+int main() {
+
+    string line1, line2;
+
+    // 多組測資
+    while (getline(cin, line1)) {
+
+        getline(cin, line2);
+
+        inorder.clear();
+        postorder.clear();
+
+        // 讀 inorder
+        stringstream ss1(line1);
+        int x;
+
+        while (ss1 >> x) {
+            inorder.push_back(x);
+        }
+
+        // 讀 postorder
+        stringstream ss2(line2);
+
+        while (ss2 >> x) {
+            postorder.push_back(x);
+        }
+
+        // 初始化答案
+        bestSum = INT_MAX;
+        bestLeaf = INT_MAX;
+
+        // 開始 DFS
+        build(
+            0,
+            inorder.size() - 1,
+            0,
+            postorder.size() - 1,
+            0
+        );
+
+        // 輸出答案
+        cout << bestLeaf << endl;
+    }
+
+    return 0;
+}

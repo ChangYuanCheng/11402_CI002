@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+bool ok;
+
+// 回傳總重量
+int solve() {
+
+    int Wl, Dl, Wr, Dr;
+    cin >> Wl >> Dl >> Wr >> Dr;
+
+    // 左子樹
+    if(Wl == 0)
+        Wl = solve();
+
+    // 右子樹
+    if(Wr == 0)
+        Wr = solve();
+
+    // 檢查平衡
+    if(Wl * Dl != Wr * Dr)
+        ok = false;
+
+    // 回傳總重量
+    return Wl + Wr;
+}
+
+int main() {
+
+    int T;
+    cin >> T;
+
+    while(T--) {
+
+        ok = true;
+
+        solve();
+
+        if(ok)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
+
+        if(T)
+            cout << "\n";
+    }
+
+    return 0;
+}
