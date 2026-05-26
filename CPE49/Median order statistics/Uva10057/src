@@ -4,9 +4,11 @@
 using namespace std;
 
 int main() {
+
     int n;
 
     while (cin >> n) {
+
         vector<int> a(n);
 
         for (int i = 0; i < n; i++) {
@@ -15,18 +17,21 @@ int main() {
 
         sort(a.begin(), a.end());
 
-        int mid1 = a[(n - 1) / 2];
-        int mid2 = a[n / 2];
+        int low = a[(n - 1) / 2];
+        int high = a[n / 2];
 
-        int cnt = 0;
+        int cnt =
+            upper_bound(a.begin(), a.end(), high)
+            - lower_bound(a.begin(), a.end(), low);
 
-        for (int x : a) {
-            if (x == mid1 || x == mid2) cnt++;
-        }
+        int ways = high - low + 1;
 
-        int ways = (mid2 - mid1 + 1);
-
-        cout << mid1 << " " << cnt << " " << ways << endl;
+        cout << low
+             << " "
+             << cnt
+             << " "
+             << ways
+             << endl;
     }
 
     return 0;
