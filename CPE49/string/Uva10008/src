@@ -1,63 +1,60 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <algorithm>
 using namespace std;
 
-struct Letter {
-    char ch;
-    int cnt;
-};
+bool cmp(pair<char,int> a, pair<char,int> b)
+{
+    if(a.second != b.second)
+    {
+        return a.second > b.second;
+    }
 
-bool cmp(Letter a, Letter b) {
-
-    if (a.cnt != b.cnt)
-        return a.cnt > b.cnt;
-
-    return a.ch < b.ch;
+    return a.first < b.first;
 }
 
-int main() {
-
+int main()
+{
     int n;
     cin >> n;
+
     cin.ignore();
 
-    int freq[26] = {0};
+    int cnt[26] = {};
 
-    string s;
-
-    while (n--) {
+    while(n--)
+    {
+        string s;
 
         getline(cin, s);
 
-        for (int i = 0; i < s.length(); i++) {
+        for(char c : s)
+        {
+            c = toupper(c);
 
-            if (isalpha(s[i])) {
-
-                char c = toupper(s[i]);
-
-                freq[c - 'A']++;
+            if(c >= 'A' && c <= 'Z')
+            {
+                cnt[c - 'A']++;
             }
         }
     }
 
-    Letter arr[26];
+    vector<pair<char,int>> v;
 
-    for (int i = 0; i < 26; i++) {
-        arr[i].ch = 'A' + i;
-        arr[i].cnt = freq[i];
+    for(int i = 0; i < 26; i++)
+    {
+        if(cnt[i] > 0)
+        {
+            v.push_back({'A' + i, cnt[i]});
+        }
     }
 
-    sort(arr, arr + 26, cmp);
+    sort(v.begin(), v.end(), cmp);
 
-    for (int i = 0; i < 26; i++) {
-
-        if (arr[i].cnt > 0) {
-            cout << arr[i].ch
-                 << " "
-                 << arr[i].cnt
-                 << endl;
-        }
+    for(auto p : v)
+    {
+        cout << p.first << " " << p.second << endl;
     }
 
     return 0;
