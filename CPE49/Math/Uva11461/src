@@ -8,8 +8,8 @@ int main() {
     while (cin >> a >> b) {
         if (a == 0 && b == 0) break;
 
-        long long l = ceil(sqrt(a));
-        long long r = floor(sqrt(b));
+        long long l = ceil(sqrt(a)); //上取整
+        long long r = floor(sqrt(b)); //下取整
 
         if (r < l) cout << 0 << endl;
         else cout << (r - l + 1) << endl;
