@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, m;
+    int field = 1;
+
+    while (cin >> n >> m) {
+        if (n == 0 && m == 0)
+            break;
+
+        vector<string> grid(n);
+        vector<string> ans(n, string(m, '0'));//答案陣列 產生n*m的0陣列
+
+        for (int i = 0; i < n; i++) {
+            cin >> grid[i];
+        }
+
+        int dx[8] = {-1,-1,-1,0,0,1,1,1};
+        int dy[8] = {-1,0,1,-1,1,-1,0,1};
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+
+                if (grid[i][j] == '*') {
+                    ans[i][j] = '*';
+                    continue;
+                }
+
+                int cnt = 0;
+
+                for (int k = 0; k < 8; k++) {
+                    int nx = i + dx[k];
+                    int ny = j + dy[k];
+
+                    if (nx >= 0 && nx < n &&
+                        ny >= 0 && ny < m &&
+                        grid[nx][ny] == '*') {
+                        cnt++;
+                    }
+                }
+
+                ans[i][j] = cnt + '0';
+            }
+        }
+
+        if (field > 1)
+            cout << endl;
+
+        cout << "Field #" << field++ << ":" << endl;
+
+        for (int i = 0; i < n; i++) {
+            cout << ans[i] << endl;
+        }
+    }
+
+    return 0;
+}

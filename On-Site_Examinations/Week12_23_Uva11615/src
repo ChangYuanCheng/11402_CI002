@@ -1,0 +1,26 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        long long N, A, B;
+        cin >> N >> A >> B;
+
+        long long depthA = (long long)log2(A) + 1;
+        long long depthB = (long long)log2(B) + 1;
+
+        long long d = max(depthA, depthB);
+
+        long long duplicated = (1LL << (N - d + 1)) - 2;
+
+        long long total = (1LL << N) - 1;
+
+        cout << total - duplicated << endl;
+    }
+
+    return 0;
+}

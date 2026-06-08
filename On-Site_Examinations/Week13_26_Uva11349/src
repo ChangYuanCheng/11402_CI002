@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int T;
+    cin >> T;
+
+    for (int tc = 1; tc <= T; tc++) {
+        char ch1, ch2;
+        int n;
+
+        cin >> ch1 >> ch2 >> n; // N = n
+
+        vector<vector<long long>> a(n, vector<long long>(n));
+
+        bool ok = true;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cin >> a[i][j];
+
+                if (a[i][j] < 0)
+                    ok = false;
+            }
+        }
+
+        for (int i = 0; i < n && ok; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a[i][j] != a[n - 1 - i][n - 1 - j]) {
+                    ok = false;
+                    break;
+                }
+            }
+        }
+
+        cout << "Test #" << tc << ": ";
+
+        if (ok)
+            cout << "Symmetric." << endl;
+        else
+            cout << "Non-symmetric." << endl;
+    }
+
+    return 0;
+}

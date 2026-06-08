@@ -1,0 +1,32 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int N, B, H, W;
+
+    while (cin >> N >> B >> H >> W) {
+        int ans = 1e9;
+
+        for (int i = 0; i < H; i++) {
+            int price;
+            cin >> price;
+
+            for (int j = 0; j < W; j++) {
+                int beds;
+                cin >> beds;
+
+                if (beds >= N) {
+                    ans = min(ans, price * N);
+                }
+            }
+        }
+
+        if (ans <= B)
+            cout << ans << endl;
+        else
+            cout << "stay home" << endl;
+    }
+
+    return 0;
+}

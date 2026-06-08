@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string a, b;
+
+    while (getline(cin, a) && getline(cin, b)) {
+        int cntA[26] = {0};
+        int cntB[26] = {0};
+
+        for (char c : a)
+            cntA[c - 'a']++;
+
+        for (char c : b)
+            cntB[c - 'a']++;
+
+        for (int i = 0; i < 26; i++) {
+            int common = min(cntA[i], cntB[i]);
+
+            while (common--) {
+                cout << char('a' + i);
+            }
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}

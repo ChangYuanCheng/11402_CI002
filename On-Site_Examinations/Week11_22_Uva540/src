@@ -1,0 +1,63 @@
+
+#include <iostream>
+#include <queue>
+#include <map>
+using namespace std;
+
+int main() {
+    int t, scenario = 1;
+
+    while (cin >> t && t) {
+        cout << "Scenario #" << scenario++ << "\n";
+
+        map<int, int> teamOf;
+
+        for (int i = 0; i < t; i++) {
+            int n;
+            cin >> n;
+
+            while (n--) {
+                int x;
+                cin >> x;
+                teamOf[x] = i;
+            }
+        }
+
+        queue<int> teamQueue;
+        queue<int> memberQueue[1000];
+
+        string cmd;
+
+        while (cin >> cmd) {
+            if (cmd == "STOP") break;
+
+            if (cmd == "ENQUEUE") {
+                int x;
+                cin >> x;
+
+                int team = teamOf[x];
+
+                if (memberQueue[team].empty()) {
+                    teamQueue.push(team);
+                }
+
+                memberQueue[team].push(x);
+            }
+            else {
+                int team = teamQueue.front();
+
+                cout << memberQueue[team].front() << "\n";
+
+                memberQueue[team].pop();
+
+                if (memberQueue[team].empty()) {
+                    teamQueue.pop();
+                }
+            }
+        }
+
+        cout << "\n";
+    }
+
+    return 0;
+}
