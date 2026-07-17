@@ -1,37 +1,37 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-int count(int n) {
-	int cnt = 1;
-	while (n != 1) {
-		if (n % 2 == 0) {
-			n /= 2;
+int cycle(int n) {
+    int cnt = 1;
 
-		}
-		else {
-			n = 3 * n + 1;
-		}
-		cnt++;
-	}
-	return cnt;
+    while (n != 1) {
+        if (n % 2 == 0) {
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+        cnt++;
+    }
+
+    return cnt;
 }
 
 int main() {
-	int i, j;
-	while (cin >> i >> j) {
-		if (i > j) {
-			swap(i, j);
-		}
+    int i, j;
 
-		int max = 0;
+    while (cin >> i >> j) {
+        int a = i, b = j;   // 保留原輸入順序
 
-		for (int a = i; a <= j; a++) {
-			int c = count(a);
-			if (max < c) {
-				max = c;
-			}
-		}
-		cout << i << " " << j << " " << max << endl;
-	}
+        if (i > j) swap(i, j);
 
+        int mx = 0;
+
+        for (int a = i; a <= j; a++) {
+            int c = cycle(a);
+            if (c > mx) mx = c;
+        }
+
+        cout << a << " " << b << " " << mx << endl;
+    }
 }
